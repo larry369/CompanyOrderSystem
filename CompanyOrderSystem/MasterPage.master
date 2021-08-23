@@ -1,0 +1,114 @@
+﻿<%@ Master Language="C#" %>
+
+<!DOCTYPE html>
+
+<script runat="server">
+    protected void Page_Load(object sender,EventArgs e)
+    {
+        Account emp = AccountsUtility.FindAccountById(Convert.ToInt32(HttpContext.Current.User.Identity.Name));
+        Employee emp2 = EmployeesUtility.FindEmployeeById(Convert.ToInt32(HttpContext.Current.User.Identity.Name));
+        UserID.Text = emp2.Name;
+        Image1.ImageUrl = "/Upload/" + emp.ImageFileName;
+    }
+    protected void LinkButton1_Click(object sender, EventArgs e)
+    {
+        FormsAuthentication.SignOut();
+        Response.Redirect("~/HomePage.aspx");
+    }
+</script>
+
+<html>
+<head runat="server">
+    <title></title>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="Content/styles.css" rel="stylesheet" />
+
+    <asp:ContentPlaceHolder ID="Style" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <div id="header" class="px-3 py-3" style="background-color: #5b9bd5">
+            <div class="container">
+                <div class="row">
+                    <div id="Logoarea" style="" class=" px-1 col-12  col-md-2 col-lg-3">
+                        <a href="HomePage.aspx" class="d-flex  mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+
+                            <img class="bi me-2" width="150" height="50" src="Img/Logo.png" />
+
+                        </a>
+                    </div>
+                    <div style="" class="col-12 col-md-8 col-lg-5">
+                        <input type="text" id="searchbar" placeholder="搜尋" class="form-control" style="width: 400px;" />
+
+                    </div>
+                    <div class=" col-12 col-md-auto col-lg-4">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <div class="btn-group">
+                                    <asp:Image ID="Image1" runat="server" CssClass="rounded-circle" Style="width: 50px; height: 50px;" />
+                                    <asp:Label ID="UserID" runat="server" CssClass="text-white align-bottom btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></asp:Label>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">個人資料</a></li>
+                                        <li><a class="dropdown-item" href="#">我的錢包</a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                        <li>
+                                            <hr class="dropdown-divider" />
+                                        </li>
+                                        <li>
+                                            <asp:LinkButton ID="LinkButton1" CssClass="dropdown-item" runat="server" OnClick="LinkButton1_Click">登出</asp:LinkButton>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class=" container" style="height: 800px; background-color: white;">
+            <div class="row">
+                <!--sidebar-->
+                <div class="col-lg-3 col-12">
+                <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px;background-color:#ceddeb;">
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="HomePage.aspx" class="nav-link link-dark">
+                                <svg class="bi me-2" width="16" height="16">
+                                    <use xlink:href="#home"></use></svg>
+                                首頁
+
+                            </a>
+                        </li>
+                        <li>
+                            <a href="Orderpage.aspx" class="nav-link link-dark">
+                                <svg class="bi me-2" width="16" height="16">
+                                    <use xlink:href="#speedometer2"></use></svg>
+                                今日餐點
+
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+</div>
+                <!--/sidebar-->
+
+                <asp:ContentPlaceHolder ID="myContent" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+
+
+    </form>
+
+    <script src="Scripts/jquery-3.6.0.min.js"></script>
+<%--        <script src="Scripts/popper.min.js"></script>--%>
+    <script src="Scripts/bootstrap.bundle.min.js"></script>
+    <script src="Scripts/scripts.js"></script>
+    <asp:ContentPlaceHolder ID="Script" runat="server">
+    </asp:ContentPlaceHolder>
+</body>
+</html>
